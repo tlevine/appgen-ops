@@ -17,6 +17,11 @@ services. Specifically, we're using
 
 Here are some [other ideas](http://www.quora.com/Is-there-anything-like-Heroku-I-can-use-for-a-PHP-site).
 
+### How to
+Deploy a random app proxy to Heroku.
+
+    ./heroku.sh
+
 ## Facebook accounts
 You need a facebook account to submit something on CollabFinder. You can submit
 multiple apps, so the AppGen team could just submit all of the apps, but the
