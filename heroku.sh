@@ -1,4 +1,6 @@
 #!/bin/sh
+# Only after I wrote this did I realize that there was already a heroku CLI
+# for app creation. Oh well; it didn't take long.
 
 # Check dependencies
 test -z $HEROKU_API_KEY && echo 'Set $HEROKU_API_KEY' && exit 1
