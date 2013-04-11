@@ -14,7 +14,8 @@ app_seed=$RANDOM
 tmp="/tmp/$app_seed"
 
 # Choose an app name
-app_name=$(curl "${APPGEN_URL}?seed=${app_seed}" | grep h1 "$tmp" | xmlstarlet sel -t -v '//h1'| tr -d \  )
+wget -O "$tmp" "${APPGEN_URL}?seed=${app_seed}"
+app_name=$(grep h1 "$tmp" | xmlstarlet sel -t -v '//h1'| tr -d \  )
 
 # Make the app
 curl -H "Accept: application/json" \
