@@ -31,7 +31,7 @@ new_app() {
        -X POST https://api.heroku.com/apps > "$tmp"
   
   # Retry if the name is already taken.
-  if cat "$tmp" | grep '"error":"Name is already taken"'; then
+  if cat "$tmp" | grep '"error":"'; then
     new_app
   fi
 } 
