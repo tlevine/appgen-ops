@@ -1,12 +1,16 @@
 #!/bin/sh
+set -e
+
 # Only after I wrote this did I realize that there was already a heroku CLI
 # for app creation. Oh well; it didn't take long.
 
 # Check dependencies
 test -z $HEROKU_API_KEY && echo 'Set $HEROKU_API_KEY' && exit 1
-if ! which jshon; then echo && echo 'Install jshon' && exit 1; fi
-if ! which xmlstarlet; then echo && echo 'Install xmlstarlet' && exit 1; fi
-set -e
+for dependency in xmlstarlet jshon; do
+  if ! which "$dependency" > /dev/null; then
+    echo && echo "Install $dependency" && exit 1
+  fi
+done
 
 # Set app seed.
 app_seed=$RANDOM
