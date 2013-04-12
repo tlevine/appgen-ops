@@ -9,11 +9,7 @@ if ! which xmlstarlet; then echo && echo 'Install xmlstarlet' && exit 1; fi
 set -e
 
 # Set app seed.
-if [ "?#" = 0 ]; then
-  app_seed=$RANDOM
-else
-  app_seed="$1";
-fi
+app_seed=$RANDOM
 
 # Global variables
 APPGEN_URL="http://appgen.herokuapp.com"
@@ -40,3 +36,5 @@ git_url=$(cat "$tmp" | jshon -e git_url -u)
   git push "$git_url" master --force
   git reset --hard HEAD^
 )
+
+echo The random app is at "http://${appname}.herokuapp.com"
