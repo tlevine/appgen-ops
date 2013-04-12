@@ -36,6 +36,9 @@ new_app() {
   fi
 } 
 
+# Go
+new_app
+
 # Push the Ruby proxy to  the app
 git_url=$(cat "$tmp" | jshon -e git_url -u)
 
