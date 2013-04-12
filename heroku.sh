@@ -8,24 +8,35 @@ if ! which jshon; then echo && echo 'Install jshon' && exit 1; fi
 if ! which xmlstarlet; then echo && echo 'Install xmlstarlet' && exit 1; fi
 set -e
 
+# Set app seed.
+if [ "?#" = 0 ]; then
+  app_seed=$RANDOM
+else
+  app_seed="$1";
+fi
+
 # Global variables
-APPGEN_URL="http://localhost:9393/"
-app_seed=$RANDOM
+APPGEN_URL="http://appgen.herokuapp.com"
 tmp="/tmp/$app_seed"
 
 # Choose an app name
 wget -O "$tmp" "${APPGEN_URL}?seed=${app_seed}"
-app_name=$(grep h1 "$tmp" | xmlstarlet sel -t -v '//h1'| tr -d \  )
+app_name=$(grep h1 "$tmp" | xmlstarlet sel -t -v '//h1'| tr -d \  | tr [A-Z] [a-z])
 
 # Make the app
 curl -H "Accept: application/json" \
      -u ":$HEROKU_API_KEY" \
      -d "app[name]=$app_name" \
-     -X POST https://api.heroku.com/apps
+     -X POST https://api.heroku.com/apps > "$tmp"
 
 # Push the Ruby proxy to  the app
 git_url=$(cat "$tmp" | jshon -e git_url -u)
+
 (
-  cd ruby-proxy
-  git push "$git_url" master
+  set -e
+  cd heroku-proxy-flask
+  sed -i "s/##seed##/$app_seed/" app.py
+  git commit . -m set\ seed
+  git push "$git_url" master --force
+  git reset --hard HEAD^
 )
