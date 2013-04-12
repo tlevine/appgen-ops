@@ -37,4 +37,4 @@ git_url=$(cat "$tmp" | jshon -e git_url -u)
   git reset --hard HEAD^
 )
 
-echo The random app is at "http://${appname}.herokuapp.com"
+echo The random app is at "http://${app_name}.herokuapp.com"
