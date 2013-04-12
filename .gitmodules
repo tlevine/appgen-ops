@@ -1,0 +1,3 @@
+[submodule "heroku-proxy-flask"]
+	path = heroku-proxy-flask
+	url = git@github.com:tlevine/heroku-proxy-flask.git
